@@ -6,8 +6,8 @@ This repo will serve as a collection point for data obtained on drop off locatio
 ## Data requirements
 1. Each state should have a CSV with the following schema:
 
-|state |state abbreviation|locality              |locality type |address              | Phone
-|:-----|:-----|:---------------------|:-----|:---------------------|:---------------------|
+|state |state abbreviation|county              |address              | Phone
+|:-----|:-----|:---------------------|:-----|:---------------------|
 
 
 I decided against email because phone numbers require urgency, emails can be ignored.
@@ -22,7 +22,7 @@ POC is up for Pennsylvania. The site has three dropdowns, state, zipcode or coun
 In addition, I have a fact table to let people know at the state level whether they can drop off someone else's ballot and requirements from the by the [NCSL website](https://www.ncsl.org/research/elections-and-campaigns/vopp-table-10-who-can-collect-and-return-an-absentee-ballot-other-than-the-voter.aspx#table).
 
 ## Things I will need help with
-1. Collecting the Data. It took me about two hours to scrap and clean PA election data, there are 49 other states plus DC that have this data. Based on discussions on Twitter and TFC Slack I've found other state sites with this info but will need help collecting and processing location information.
+1. Collecting the Data. It took me about two hours to scrap and clean PA election data, there are 49 other states plus DC that have this data. Based on discussions on Twitter and TFC Slack I've found other state sites with this info but will need help collecting and processing location information. After scraping, it would be extremely help to map the county to zipcode using the repo's [Data Standardization Script](https://github.com/arifyali/mail-in-ballot-dropoff/blob/master/scripts/cleaning/Data_standardization.R).
 
 2. I love shiny and csvs (well maybe not csvs), but this needs to go into a Database. I'm a Data Scientist, so the best I can do is query data and maybe create snapshot files for an ETL process, but building a DB is beyond my skills. The webapp is cool, but shiny have limitations. 
 
