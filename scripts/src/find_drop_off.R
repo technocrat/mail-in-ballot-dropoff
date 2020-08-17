@@ -53,7 +53,7 @@ google_it <- function(addr){
   url <- paste0("https://www.google.com/maps/place/",
                 gsub("[[:space:]]", "+", gsub("\n"," ",addr, fixed = T)))
   
-  link <- sprintf('<a href="%s">%s</a>',url, addr)
+  link <- sprintf('<a href="%s" target="_blank">%s</a>',url, addr)
   
   return(link)
   
