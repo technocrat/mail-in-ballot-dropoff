@@ -18,7 +18,7 @@ allzips$zipcode <- formatC(allzips$zip, width=5, format="d", flag="0")
 
 ui <- dashboardPage(
   dashboardHeader(title = "Where Can I drop off my Mail-In Ballot?"),
-  dashboardSidebar(uiOutput("state_selections"), br(), uiOutput("zipcode_selection"), br(), h2("OR"), br(), uiOutput("county_selection")),
+  dashboardSidebar(uiOutput("state_selections"), br(), uiOutput("zipcode_selection"), h2("OR"), uiOutput("county_selection")),
   dashboardBody(leafletOutput("mymap"), br(),
                 dataTableOutput(outputId = "address"), br(),
   dataTableOutput(outputId = "proxy_dropoff"))
@@ -154,7 +154,9 @@ server <- function(input, output) {
     }
     
     if(!is.null(state)){
-    DT::datatable(find_location(state = state, County = county, zipcode = zip), escape = F)
+    datatable(find_location(state = state, County = county, zipcode = zip), 
+                  filter="top", selection="multiple", escape=FALSE, 
+                  options = list(sDom  = '<"top">lrt<"bottom">ip'))
       }
     
   })
@@ -162,11 +164,17 @@ server <- function(input, output) {
   output$proxy_dropoff <- renderDataTable({
     
     if(is.null(input$state)) {
-      rules
+        datatable(rules %>% mutate(State = as.factor(State)), 
+                       filter="top", selection="multiple", escape=FALSE, 
+                       options = list(sDom  = '<"top">lrt<"bottom">ip'))
     } else if(input$state == ""){
-      rules
+      datatable(rules %>% mutate(State = as.factor(State)), 
+                filter="top", selection="multiple", escape=FALSE, 
+                options = list(sDom  = '<"top">lrt<"bottom">ip'))
     } else{
-      rules %>% filter(State == input$state) %>% select(-State)
+       datatable(rules %>% filter(State == input$state) %>% select(-State),
+                selection="multiple", escape=FALSE, 
+                 options = list(sDom  = '<"top">lrt<"bottom">ip'))
     }
     
   })
