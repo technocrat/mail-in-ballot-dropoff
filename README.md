@@ -4,12 +4,25 @@ Given the recent slow down in USPS services, voters the turn in their ballots wi
 This repo will serve as a collection point for data obtained on drop off locations. Another layer will be giving information on `proxy` drop-off voting. That information has been collected by the [NCSL](https://www.ncsl.org/research/elections-and-campaigns/vopp-table-10-who-can-collect-and-return-an-absentee-ballot-other-than-the-voter.aspx#table), so that will be a layer added.
 
 ## Data requirements
-1. Each state should have a CSV with the following schema:
+1. Each state should have a comma delimited CSV file with a .csv extension and UTF-8 encoded with the following schema:
 
-|state |state abbreviation|county              |address              | Phone
-|:-----|:-----|:---------------------|:-----|:---------------------|
+|state|county|primary_city|dropbox|zip|address|city|phone|description
+|:---:|:---:|:-----------:|:-----:|:-:|:-----:|:--:|:---:|:---------:
+
+All fields are character
 
 
+1. state is the all-cap two-letter USPS abbreviation
+2. county is the major state-level jurisdictional subdivision such as county, township, etc.
+3. primary_city is the name of the applicable voter registration unit
+4. dropbox is the name of the facility at which the drop off is located, such as City Hall
+5. zip is the five-digit USPS postal code
+6. address is the street address, preferably, although some jurisdictions provide full mailing address
+6. city is location of the dropbox 
+7. phone is the xxx-xxx-xxxx number to call for additional information
+8. other is information provided by the election authority regarding hours of operation, access, such as "in alley behind Police station, etc. Beware of embedded commas if using unquoted CSV.
+
+csv files with record newlines will require cleanup, e.g., dat %>% mutate(the_field = stringr::str_remove(the_field,"\\n"))
 I decided against email because phone numbers require urgency, emails can be ignored.
 The CSVs with this data should be stored under `Data/drop-off-locations` as csvs named using the the abbreviation.
 
@@ -28,6 +41,16 @@ In addition, I have a fact table to let people know at the state level whether t
 
 3. Spread the word. GOTV channels, send to campaigns, literally anything to tell people to go here if they need help.
 
+## Source
+
+Include a file XX.md under the docs folder where XX is the all caps state postal code indicating how the data was obtained.
 
 ## Usage by others
 The data I gathered is public, if you want to use it, I have no issues, but I will require that you site this Github repo in the name of reproduciblity
+
+## To discuss
+
+### QA checks
+
+Second contributor to check formatting. One or more other contributors to check source information directly with election officials for sources dated less recently than January 2020.
+
